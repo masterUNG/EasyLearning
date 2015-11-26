@@ -2,6 +2,7 @@ package appewtc.masterung.easylearning;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -44,11 +45,40 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             //No Space
+            checkUser();
+
 
         }
 
     }   // clickLogin
 
+    private void checkUser() {
+
+        try {
+
+            String[] strMyResult = objManageTABLE.searchUser(userString);
+            Log.d("test", "user ==> " + strMyResult[1]);
+            //Check Password
+            if (passwordString.equals(strMyResult[2])) {
+
+                //Intent to Service
+
+
+            } else {
+
+                //Password False
+                MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+                objMyAlertDialog.myDialog(MainActivity.this, "Password False", "Please Try Again Password False");
+
+            }
+
+        } catch (Exception e) {
+            //User False
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.myDialog(MainActivity.this, "No This User", "No " + userString + " in my Database");
+        }
+
+    }   // checkUser
 
 
 }   // Main Class
